@@ -7,15 +7,11 @@
     <style>
         body {
             background-image: url('fondo.jpg');
-            
-            /* Ajustes para que el fondo se vea perfecto */
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
             background-color: #1a1a1a;
-            
-            /* Estilos de texto y estructura */
             color: #ffffff;
             font-family: sans-serif;
             text-align: center;
@@ -42,11 +38,34 @@
             margin-top: 20px;
         }
 
-        iframe {
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            background: #ffffff;
+        /* Botones completamente circulares y chidos */
+        .boton-sonido {
+            background-color: #ff4757;
+            color: white;
             border: none;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        .boton-sonido:hover {
+            background-color: #ff6b81;
+            transform: scale(1.08);
+        }
+
+        .boton-sonido:active {
+            transform: scale(0.92);
         }
     </style>
 </head>
@@ -58,22 +77,22 @@
     <div class="contenedor-sonidos" id="lista-sonidos"></div>
 
     <script>
-        // Leemos el archivo sonidos.json
         fetch('sonidos.json')
             .then(respuesta => respuesta.json())
             .then(sonidos => {
                 const contenedor = document.getElementById('lista-sonidos');
-                
-                // Generamos cada iframe a partir de la lista del JSON
+
                 sonidos.forEach(sonido => {
-                    const iframe = document.createElement('iframe');
-                    iframe.width = "110";
-                    iframe.height = "200";
-                    iframe.src = sonido.url;
-                    iframe.scrolling = "no";
-                    iframe.allow = "autoplay";
-                    
-                    contenedor.appendChild(iframe);
+                    const boton = document.createElement('button');
+                    boton.className = 'boton-sonido';
+                    boton.innerText = sonido.nombre;
+
+                    boton.addEventListener('click', () => {
+                        const audio = new Audio(sonido.url);
+                        audio.play();
+                    });
+
+                    contenedor.appendChild(boton);
                 });
             })
             .catch(error => console.error('Error cargando los sonidos:', error));
