@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonidos mamones.com</title>
+    <style>
+        body {
+            background-image: url('fondo.jpg');
+            
+            /* Ajustes para que el fondo se vea perfecto */
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-color: #1a1a1a;
+            
+            /* Estilos de texto y estructura */
+            color: #ffffff;
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-shadow: 10px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .contenedor-sonidos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        iframe {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            background: #ffffff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sonidos Mamones.com</h1>
+    <p>Soy gay xdd.</p>
+
+    <div class="contenedor-sonidos" id="lista-sonidos"></div>
+
+    <script>
+        // Leemos el archivo sonidos.json
+        fetch('sonidos.json')
+            .then(respuesta => respuesta.json())
+            .then(sonidos => {
+                const contenedor = document.getElementById('lista-sonidos');
+                
+                // Generamos cada iframe a partir de la lista del JSON
+                sonidos.forEach(sonido => {
+                    const iframe = document.createElement('iframe');
+                    iframe.width = "110";
+                    iframe.height = "200";
+                    iframe.src = sonido.url;
+                    iframe.scrolling = "no";
+                    iframe.allow = "autoplay";
+                    
+                    contenedor.appendChild(iframe);
+                });
+            })
+            .catch(error => console.error('Error cargando los sonidos:', error));
+    </script>
+
+</body>
+</html>
